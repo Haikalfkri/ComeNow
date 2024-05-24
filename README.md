@@ -1,5 +1,5 @@
 <div style="text-align: center;">
-    <img width="100%" src="https://miro.medium.com/v2/resize:fit:1200/1*HVKOLLX7wprRbHTl2IPDcQ.png"></img>
+    <img width="100%" src="https://media.geeksforgeeks.org/wp-content/uploads/20200210175202/django-basics.png"></img>
 </div>
 
 # ComeNow
