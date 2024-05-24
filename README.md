@@ -1,3 +1,7 @@
+<div style="text-align: center;">
+    <img width="100%" src="https://miro.medium.com/v2/resize:fit:1200/1*HVKOLLX7wprRbHTl2IPDcQ.png"></img>
+</div>
+
 # ComeNow
 
 ComeNow is a website-based application where this application provides various information about what is happening such as hot news, events and so on. This application has several features, including creating posts or events, liking, commenting, etc., which can be accessed when the user has registered and logged in.
