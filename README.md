@@ -16,9 +16,7 @@ ComeNow is a website-based application where this application provides various i
 git clone https://github.com/Haikalfkri/ComeNow.git
 ```
 
-2. Go to project directory
-
-3. Set up a virtual environment
+2. Set up a virtual environment
 create and activate a virtual environment
 
 ```
@@ -26,19 +24,19 @@ virtualenv env or python -m venv .venv
 env/Scripts/activate or source .venv/bin/activate  
 ```
 
-4. Install dependencies
+3. Install dependencies
 
 ```
 pip install -r requirements.txt
 ```
 
-5. Change directory
+4. Change Directory
 
 ```
 cd ComeNow
 ```
 
-6. Run the app
+5. Run the app
 ```
 python manage.py runserver
 ```
