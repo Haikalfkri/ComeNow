@@ -11,90 +11,22 @@
         </div>
 
         <div class="row">
+            {% for event in events %}
             <div class="col-sm-4 mt-5">
                 <div class="card">
-                    <a href="" id="card-body-link">
-                        <img class="card-img-top" src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="">
+                    <a href="{% url 'detail-page' event.id %}" id="card-body-link">
+                        <img class="card-img-top" src="{{ event.imageUrl }}" alt="">
                     
                         <div class="card-body">
-                            <p class="card-title" id="event-date">30, Mei 2024</p>
+                            <p class="card-title" id="event-date">{{ event.event_date.date }}</p>
                             <p class="card-text" id="event-title">
-                                Inspiring ideas and making them happen? It's possible
+                                {{ event.name }}
                             </p>
                         </div>
                     </a>
                 </div>
             </div>
-            <div class="col-sm-4 mt-5">
-                <div class="card">
-                    <a href="" id="card-body-link">
-                        <img class="card-img-top" src="https://images.unsplash.com/photo-1558008258-3256797b43f3?q=80&w=1631&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="">
-                    
-                        <div class="card-body">
-                            <p class="card-title" id="event-date">31, Mei 2024</p>
-                            <p class="card-text" id="event-title">
-                                Inspiring ideas and making them happen? It's possible
-                            </p>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col-sm-4 mt-5">
-                <div class="card">
-                    <a href="" id="card-body-link">
-                        <img class="card-img-top" src="https://images.unsplash.com/photo-1528605105345-5344ea20e269?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="">
-                    
-                        <div class="card-body">
-                            <p class="card-title" id="event-date">30, Mei 2024</p>
-                            <p class="card-text" id="event-title">
-                                Inspiring ideas and making them happen? It's possible
-                            </p>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col-sm-4 mt-5">
-                <div class="card">
-                    <a href="" id="card-body-link">
-                        <img class="card-img-top" src="https://images.unsplash.com/photo-1528605105345-5344ea20e269?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="">
-                    
-                        <div class="card-body">
-                            <p class="card-title" id="event-date">30, Mei 2024</p>
-                            <p class="card-text" id="event-title">
-                                Inspiring ideas and making them happen? It's possible
-                            </p>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col-sm-4 mt-5">
-                <div class="card">
-                    <a href="" id="card-body-link">
-                        <img class="card-img-top" src="https://images.unsplash.com/photo-1528605105345-5344ea20e269?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="">
-                    
-                        <div class="card-body">
-                            <p class="card-title" id="event-date">30, Mei 2024</p>
-                            <p class="card-text" id="event-title">
-                                Inspiring ideas and making them happen? It's possible
-                            </p>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col-sm-4 mt-5">
-                <div class="card">
-                    <a href="" id="card-body-link">
-                        <img class="card-img-top" src="https://images.unsplash.com/photo-1528605105345-5344ea20e269?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="">
-                    
-                        <div class="card-body">
-                            <p class="card-title" id="event-date">30, Mei 2024</p>
-                            <p class="card-text" id="event-title">
-                                Inspiring ideas and making them happen? It's possible
-                            </p>
-                        </div>
-                    </a>
-                </div>
-            </div>
+            {% endfor %}
         </div>
 
         <div id="btn-seeMore" class="mt-5">
