@@ -5,19 +5,20 @@ from django.contrib.auth.models import Group
 from django.contrib.auth.decorators import login_required
 
 from .forms import UserRegistrationForm
+from .models import UserProfile
 
 # Create your views here.
-@login_required
-def redirect_base_on_role_and_group(request):
-    user = request.user
+# @login_required
+# def redirect_base_on_role_and_group(request):
+#     user = request.user
     
-    if user.role == 'admin' and user.groups.filter(name='admin').exists():
-        return redirect('admin-home')
-    elif user.role == 'user' and user.groups.filter(name='user').exists():
-        return redirect('user-home')
-    else:
-        messages.error(request, "You don't have any permission")
-        return redirect('login')
+#     if user.role == 'admin' and user.groups.filter(name='admin').exists():
+#         return redirect('admin-home')
+#     elif user.role == 'user' and user.groups.filter(name='user').exists():
+#         return redirect('user-home')
+#     else:
+#         messages.error(request, "You don't have any permission")
+#         return redirect('login')
 
 
 
