@@ -26,5 +26,13 @@ class UserProfile(models.Model):
     profile_picture = models.ImageField(upload_to="Profiles/", default="Profiles/default_image.jpg")
     
     
+    def profileImageUrl(self):
+        try:
+            url = self.profile_picture.url
+        except:
+            url = ''
+        return url
+        
+    
     def __str__(self):
         return f"{self.username.username}'s profile"

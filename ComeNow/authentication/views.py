@@ -65,4 +65,4 @@ def UserLogin(request):
 def UserLogout(request):
     logout(request)
     messages.success(request, "Logout Successfully")
-    return redirect('login')
+    return redirect('events')
