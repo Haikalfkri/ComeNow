@@ -23,10 +23,10 @@
                 <p id="Location">Location : {{ event.location }}</p>
                 <p id="hour">Jam : {{ event.event_data.hour }}</p>
                 <p id="contact">Contact : {{ event.contact }}</p>
-                <p id="status">Status : Upcoming</p>
+                <p id="status">Status : {{ status }}</p>
                 <div id="information">
                     <p id="info-title">More Information : </p>
-                    <p id="info-text">{{ status }}</p>
+                    <p id="info-text">{{ event.more_information }}<p>
                 </div>
             </div>
         </div>
