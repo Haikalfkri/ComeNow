@@ -5,7 +5,6 @@ from django.contrib.auth.models import Group
 from django.contrib.auth.decorators import login_required
 
 from .forms import UserRegistrationForm
-from .models import UserProfile
 
 # Create your views here.
 # @login_required

@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "authentication",
     "events",
-    "posts"
+    "posts",
+    "adminDashboard",
 ]
 
 MIDDLEWARE = [
