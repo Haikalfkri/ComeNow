@@ -5,8 +5,22 @@
   <h1 class="h3 mb-0 text-gray-800">Create Event</h1>
 </div>
 
+{% if form.errors %}
+    {% for field in form %}
+        {% for error in field.errors %}
+            <div class="alert alert-danger">
+                <a href="#" class="close" data-dismiss="alert">x</a>
+                {{ error }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+{% endif %}
+
 {% for message in messages %}
-    {{ message }}
+    <div class="alert alert-success">
+        <a href="#" class="close" data-dismiss="alert">x</a>
+        {{ message }}
+    </div>
 {% endfor %}
 
 <form method="POST" enctype="multipart/form-data">

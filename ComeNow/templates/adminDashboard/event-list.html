@@ -8,7 +8,10 @@
 </div>
 
 {% for message in messages %}
-    {{ message }}
+    <div class="alert alert-success">
+        <a href="" class="close" data-dismiss="alert">x</a>
+        {{ message }}
+    </div>
 {% endfor %}
 
 <div class="container-fluid">
