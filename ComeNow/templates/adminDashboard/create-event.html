@@ -1,0 +1,50 @@
+{% extends 'adminDashboard/base.html' %} {% block content %}
+
+<!-- Page Heading -->
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+  <h1 class="h3 mb-0 text-gray-800">Create Event</h1>
+</div>
+
+{% for message in messages %}
+    {{ message }}
+{% endfor %}
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label for="name" class="form-label">Name</label>
+        {{ form.name }}
+      </div>
+      <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        {{ form.description }}
+      </div>
+      <div class="mb-3">
+        <label for="location" class="form-label">Location</label>
+        {{ form.location }}
+      </div>
+      <div class="mb-3">
+        <label for="formFile" class="form-label">Images</label>
+        {{ form.image }}
+      </div>
+      <div class="mb-3">
+        <label for="contact" class="form-label">Contact</label>
+        {{ form.contact }}
+      </div>
+      <div class="mb-3">
+        <label for="event_date" class="form-label">Date</label>
+        {{ form.event_date }}
+      </div>
+      <div class="mb-3">
+        <label for="category" class="form-label">Category</label>
+        {{ form.event_category }}
+      </div>
+      <div class="mb-3">
+        <label for="more-information" class="form-label">More Information</label>
+        {{ form.more_information }}
+      </div>
+
+    <button type="submit" class="btn btn-primary mt-4">Submit</button>
+</form>
+
+{% endblock %}
