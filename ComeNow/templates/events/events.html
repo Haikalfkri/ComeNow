@@ -1,6 +1,25 @@
 {% extends 'base/base.html' %}
 
+{% load static %}
+
 {% block content %}
+
+    <style>  
+        .like-link {
+            color: black;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+        
+        .like-icon-img {
+            width: 24px; /* Adjust the width as necessary */
+            height: auto; /* Maintain aspect ratio */
+            margin-right: 5px; /* Add margin to separate it from the like count */
+        }
+        
+    </style>
+
     <div id="events-body">
         <div id="top-image">
             <img class="col-md-12" src="https://images.unsplash.com/photo-1638132704795-6bb223151bf7?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="">
@@ -12,11 +31,10 @@
 
         <div class="row">
             {% for event in events %}
-            <div class="col-sm-4 mt-5">
+            <div class="col-sm-4 mt-5 position-relative">
                 <div class="card">
                     <a href="{% url 'detail-page' event.id %}" id="card-body-link">
                         <img class="card-img-top" src="{{ event.imageUrl }}" alt="">
-                    
                         <div class="card-body">
                             <p class="card-title" id="event-date">{{ event.event_date.date }}</p>
                             <p class="card-text" id="event-title">
@@ -25,9 +43,16 @@
                         </div>
                     </a>
                 </div>
+                <div class="like-icon">
+                    <a href="{% url 'event-like' event.id %}" class="like-link">
+                        <img src="{% static 'img/before-like.png' %}" alt="Like Icon" class="like-icon-img">
+                        {{ event.likes }}
+                    </a>
+                </div>
             </div>
             {% endfor %}
         </div>
+        
 
         <div id="btn-seeMore" class="mt-5">
             <a href="#" type="btn">See More</a>
