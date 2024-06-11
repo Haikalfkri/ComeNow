@@ -16,7 +16,7 @@ class EventModel(models.Model):
     contact = models.CharField(max_length=12)
     event_date = models.DateTimeField()
     date = models.DateTimeField(auto_now_add=True)
-    event_category = models.OneToOneField(EventCategories, on_delete=models.CASCADE)
+    event_category = models.ForeignKey(EventCategories, on_delete=models.CASCADE)
     more_information = models.CharField(max_length=255)
     
     def __str__(self):

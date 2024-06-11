@@ -1,5 +1,6 @@
 from django import forms
 from events.models import EventModel
+from authentication.models import CustomUser
 
 
 class CreateEventForm(forms.ModelForm):
@@ -54,4 +55,38 @@ class CreateEventForm(forms.ModelForm):
                 'id': 'more-information',
                 'placeholder': '( optional )'
             })
+        }
+        
+        
+
+class UserForm(forms.ModelForm):
+    email = forms.EmailField(widget=forms.EmailInput(attrs={
+        'class': 'form-control',
+        'type': 'email',
+        'id': 'email',
+        'placeholder': 'email',
+    }))
+    class Meta:
+        model = CustomUser
+        fields = ('username', 'first_name', 'last_name', 'email')
+        
+        widgets = {
+            'username': forms.TextInput(attrs={
+                'class': 'form-control',
+                'type': 'text',
+                'id': 'username',
+                'placeholder': 'username'
+            }),
+            'first_name': forms.TextInput(attrs={
+                'class': 'form-control',
+                'type': 'text',
+                'id': 'first_name',
+                'placeholder': 'first name'
+            }),
+            'last_name': forms.TextInput(attrs={
+                'class': 'form-control',
+                'type': 'text',
+                'id': 'last_name',
+                'placeholder': 'last name'
+            }),
         }

@@ -1,0 +1,29 @@
+{% extends 'adminDashboard/base.html' %} {% block content %}
+
+<!-- Page Heading -->
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+  <h1 class="h3 mb-0 text-gray-800">Update User</h1>
+</div>
+
+<form method="POST">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label for="username" class="form-label">Username</label>
+        {{ form.username }}
+      </div>
+      <div class="mb-3">
+        <label for="first_name" class="form-label">First Name</label>
+        {{ form.first_name }}
+      </div>
+      <div class="mb-3">
+        <label for="last_name" class="form-label">Last Name</label>
+        {{ form.last_name }}
+      </div>
+      <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        {{ form.email }}
+      </div>
+    <button type="submit" class="btn btn-primary mt-4">Submit</button>
+</form>
+
+{% endblock %}
