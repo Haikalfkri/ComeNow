@@ -1,9 +1,9 @@
-from django.shortcuts import render
-from django.http import HttpResponseRedirect
-from django.urls import reverse
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
 
-from events.models import EventModel, Likes
+from events.models import EventModel
+from authentication.models import CustomUser
 
 # Create your views here.
 def EventView(request):
@@ -16,7 +16,7 @@ def EventView(request):
 
 
 def DetailPage(request, id):
-    event = EventModel.objects.get(id=id)
+    event = get_object_or_404(EventModel, id=id)
     status = event.get_status
     
     context = {
@@ -28,23 +28,20 @@ def DetailPage(request, id):
 
 
 @login_required
-def like(request, event_id):
-    user = request.user
-    event = EventModel.objects.get(id=event_id)
-    current_likes = event.likes
-    liked = Likes.objects.filter(user=user, event=event).count()
-    
-    if not liked:
-        liked = Likes.objects.create(user=user, event=event)
-        current_likes += 1
-        liked = True
-    else:
-        liked = Likes.objects.filter(user=user, event=event).delete()
-        current_likes -= 1
-        liked = False
-        
-        
-    event.likes = current_likes
-    event.save()
-    
-    return HttpResponseRedirect(reverse('events'))
+def eventLike(request):
+    if request.POST.get('action') == 'post':
+        result = ''
+        id = int(request.POST.get('eventid'))
+        event = get_object_or_404(EventModel, id=id)
+        if event.likes.filter(id=request.user.id).exists():
+            event.likes.remove(request.user)
+            event.like_count -= 1
+            result = event.like_count
+            event.save()
+        else:
+            event.likes.add(request.user)
+            event.like_count += 1
+            result = event.like_count
+            event.save()
+
+        return JsonResponse({'result': result})

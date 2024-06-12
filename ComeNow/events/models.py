@@ -20,7 +20,9 @@ class EventModel(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     event_category = models.ForeignKey(EventCategories, on_delete=models.CASCADE)
     more_information = models.CharField(max_length=255)
-    likes = models.IntegerField(default=0)
+    
+    likes = models.ManyToManyField(CustomUser, related_name="like", default=None, blank=True)
+    like_count = models.BigIntegerField(default=0)
     
     @property
     def imageUrl(self):
@@ -45,12 +47,3 @@ class EventModel(models.Model):
     
     def __str__(self):
         return self.name
-
-
-class Likes(models.Model):
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="user_likes")
-    event = models.ForeignKey(EventModel, on_delete=models.CASCADE, related_name="post_likes")
-    
-    
-    def __str__(self):
-        return self.user.username

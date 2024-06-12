@@ -4,32 +4,111 @@
 
 {% block content %}
 
-    <div id="detail-page">
-        <div id="detail-body">
-            <div id="top-div">
-                <p id="title">{{ event.name }}</p>
-                <p id="date">{{ event.event_data.date }}</p>
+
+<style>
+    #top-div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+    }
+
+    #title {
+        font-size: 30px;
+        font-weight: 600;
+        margin-right: auto; /* Adjust this if needed */
+        text-align: center;
+        align-items: center;
+    }
+
+    .like-icon {
+        margin-left: auto; /* Adjust this if needed */
+        margin-right: 10px;
+    }
+
+    .like-icon a {
+        text-decoration: none;
+    }
+
+</style>
+
+<div id="detail-page">
+    <div id="detail-body">
+        <div id="top-div" class="d-flex justify-content-center">
+            <p id="title">{{ event.name }}</p>
+            <div class="like-icon">
+                {% if user.is_authenticated %}
+                <button class="btn btn-link text-dark p-0 border-0 btn-outline-light" id="like-button" value="{{event.id}}">
+                    <svg width="1.5em" height="1.5em" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+                        <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"/>
+                      </svg>
+                </button>
+                {% else %}
+                <a href="{% url 'login' %}" class="text-dark">
+                    <svg width="1.5em" height="1.5em" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+                        <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"/>
+                      </svg>
+                </a>
+                {% endif %}
+
+                <span class="" id="like_count">{{ event.like_count }}</span>
             </div>
 
-            <div id="detail-image">
-                <img class="card-img-top" src="{{ event.imageUrl }}" alt="">
+            <div class="fav-icon">
+                <button class="btn btn-link text-dark p-0 border-0 btn-outline-light" id="fav-button" value="{{ event.id }}">
+                    <svg width="1.5em" height="1.5em" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark-plus" viewBox="0 0 16 16">
+                        <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1z"/>
+                        <path d="M8 4a.5.5 0 0 1 .5.5V6H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V7H6a.5.5 0 0 1 0-1h1.5V4.5A.5.5 0 0 1 8 4"/>
+                      </svg>
+                </button>
             </div>
+        </div>
+        <p id="date">{{ event.event_data.date }}</p>
+        
+        <div id="detail-image">
+            <img class="card-img-top" src="{{ event.imageUrl }}" alt="">
+        </div>
 
-            <div id="description">
-                <p>{{ event.description }}</p>
-            </div>
+        <div id="description">
+            <p>{{ event.description }}</p>
+        </div>
 
-            <div id="info">
-                <p id="Location">Location : {{ event.location }}</p>
-                <p id="hour">Jam : {{ event.event_data.hour }}</p>
-                <p id="contact">Contact : {{ event.contact }}</p>
-                <p id="status">Status : {{ status }}</p>
-                <div id="information">
-                    <p id="info-title">More Information : </p>
-                    <p id="info-text">{{ event.more_information }}<p>
-                </div>
+        <div id="info">
+            <p id="Location">Location : {{ event.location }}</p>
+            <p id="hour">Date : {{ event.event_date }}</p>
+            <p id="contact">Contact : {{ event.contact }}</p>
+            <p id="status">Status : {{ status }}</p>
+            <div id="information">
+                <p id="info-title">More Information : </p>
+                <p id="info-text">{{ event.more_information }}</p>
             </div>
         </div>
     </div>
+</div>
+
+
+<script>
+
+    $(document).on('click', '#like-button', function(e) {
+        e.preventDefault();
+        $.ajax({
+            type: 'POST',
+            url: '{% url "event-like" %}',
+            data: {
+                eventid: $('#like-button').val(),
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+                action: 'post'
+            },
+            success: function (json) {
+                document.getElementById("like_count").innerHTML = json['result']
+            },
+            error: function(err) {
+                console.log("Error :", err)
+            }
+        })
+    })
+
+</script>
+
 
 {% endblock %}
