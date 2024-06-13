@@ -63,12 +63,29 @@
             </div>
 
             <div class="fav-icon">
-                <button class="btn btn-link text-dark p-0 border-0 btn-outline-light" id="fav-button" value="{{ event.id }}">
+                {% if user.is_authenticated %}
+                    {% if request.user in event.favorites.all %}
+                        <button class="btn btn-link text-dark p-0 border-0 btn-outline-light" id="btn-fav" value="{{ event.id }}">
+                            <svg width="1.5em" height="1.5em" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark-check-fill" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M2 15.5V2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.74.439L8 13.069l-5.26 2.87A.5.5 0 0 1 2 15.5m8.854-9.646a.5.5 0 0 0-.708-.708L7.5 7.793 6.354 6.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0z"/>
+                              </svg>
+                        </button>
+                    {% else %}
+                        <button class="btn btn-link text-dark p-0 border-0 btn-outline-light" id="btn-fav" value="{{ event.id }}">
+                            <svg width="1.5em" height="1.5em" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark-check" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M10.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0"/>
+                                <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1z"/>
+                              </svg>
+                        </button>
+                    {% endif %}
+                {% else %}
+                <a href="{% url 'login' %}">
                     <svg width="1.5em" height="1.5em" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark-plus" viewBox="0 0 16 16">
                         <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1z"/>
                         <path d="M8 4a.5.5 0 0 1 .5.5V6H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V7H6a.5.5 0 0 1 0-1h1.5V4.5A.5.5 0 0 1 8 4"/>
                       </svg>
-                </button>
+                </a>
+                {% endif %}
             </div>
         </div>
         <p id="date">{{ event.event_data.date }}</p>
@@ -97,6 +114,7 @@
 
 <script>
 
+    // like functionality
     $(document).on('click', '#btn-like', function() {
         var event_id = $(this).val();
         $.ajax({
@@ -106,6 +124,20 @@
                 event_id: event_id,
                 csrfmiddlewaretoken: "{{ csrf_token }}",
 
+            },
+        })
+        location.reload()
+    })
+
+    // add to favorite functionality
+    $(document).on('click', '#btn-fav', function() {
+        var event_id = $(this).val();
+        $.ajax({
+            method: "POST",
+            url: "{% url 'event-fav' %}",
+            data: {
+                event_id: event_id,
+                csrfmiddlewaretoken: "{{ csrf_token }}"
             },
         })
         location.reload()

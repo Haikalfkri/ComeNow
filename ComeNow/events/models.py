@@ -22,6 +22,10 @@ class EventModel(models.Model):
     more_information = models.CharField(max_length=255)
     
     liked_by = models.ManyToManyField(CustomUser, related_name="event_like", blank=True)
+    favorites = models.ManyToManyField(CustomUser, related_name="event_fav", blank=True)
+    
+    liked_count = models.BigIntegerField(default=0)
+    favorites_count = models.BigIntegerField(default=0)
     
     @property
     def imageUrl(self):
