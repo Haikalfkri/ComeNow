@@ -43,6 +43,16 @@ class EventModel(models.Model):
             return "Upcoming"
         return "Ended"
 
+
+    @property
+    def like_count(self):
+        total = 0
+        try:
+           total = self.liked_by.count() 
+        except:
+            total = 0
+        return total
+
     
     def __str__(self):
         return self.name

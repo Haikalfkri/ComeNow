@@ -16,10 +16,12 @@ def EventView(request):
 def DetailPage(request, id):
     event = get_object_or_404(EventModel, id=id)
     status = event.get_status
+    like_count = event.like_count
     
     context = {
         'event': event,
         'status': status,
+        'like_count': like_count,
     }
     
     return render(request, "events/detailPage.html", context)
