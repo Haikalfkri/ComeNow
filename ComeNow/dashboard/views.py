@@ -21,6 +21,22 @@ def eventList(request):
     return render(request, "dashboard/dash-admin/event-list.html", context)
 
 
+def createEvent(request):
+    if request.method == 'POST':
+        form = CreateEventForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Create Event Succesfull")
+            return redirect('event-list')
+    else:
+        form = CreateEventForm()
+        
+    context = {
+        'form': form
+    }
+    return render(request, "dashboard/dash-admin/create-event.html", context)
+
+
 def updateEvent(request, event_id):
     event = EventModel.objects.get(id=event_id)
     if request.method == "POST":
