@@ -37,6 +37,12 @@ def updateEvent(request, event_id):
     }
     
     return render(request, "dashboard/dash-admin/update-event.html", context)
+
+def deleteEvent(request, event_id):
+    event = EventModel.objects.get(id=event_id)
+    event.delete()
+    messages.success(request, "Delete Successfull")
+    return redirect('event-list')
     
 
 
