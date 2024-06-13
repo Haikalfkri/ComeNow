@@ -21,8 +21,7 @@ class EventModel(models.Model):
     event_category = models.ForeignKey(EventCategories, on_delete=models.CASCADE)
     more_information = models.CharField(max_length=255)
     
-    likes = models.ManyToManyField(CustomUser, related_name="like", default=None, blank=True)
-    like_count = models.BigIntegerField(default=0)
+    liked_by = models.ManyToManyField(CustomUser, related_name="event_like", blank=True)
     
     @property
     def imageUrl(self):

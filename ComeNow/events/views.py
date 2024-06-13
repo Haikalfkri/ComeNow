@@ -1,9 +1,7 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
-from django.http import JsonResponse
 
 from events.models import EventModel
-from authentication.models import CustomUser
 
 # Create your views here.
 def EventView(request):
@@ -29,19 +27,12 @@ def DetailPage(request, id):
 
 @login_required
 def eventLike(request):
-    if request.POST.get('action') == 'post':
-        result = ''
-        id = int(request.POST.get('eventid'))
-        event = get_object_or_404(EventModel, id=id)
-        if event.likes.filter(id=request.user.id).exists():
-            event.likes.remove(request.user)
-            event.like_count -= 1
-            result = event.like_count
-            event.save()
-        else:
-            event.likes.add(request.user)
-            event.like_count += 1
-            result = event.like_count
-            event.save()
-
-        return JsonResponse({'result': result})
+    event_id = request.POST.get('event_id')
+    event = get_object_or_404(EventModel, id=event_id)
+    
+    if event.liked_by.filter(id=request.user.id).exists():
+        event.liked_by.remove(request.user)
+    else:
+        event.liked_by.add(request.user)
+        
+    return redirect('detail-page', id=event_id)
