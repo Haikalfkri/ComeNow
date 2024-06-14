@@ -5,6 +5,7 @@ from django.contrib import messages
 from events.models import EventModel
 from authentication.models import CustomUser
 from .forms import CreateEventForm, UserForm
+from authentication.forms import UserRegistrationForm
 
 # Create your views here.
 def dashboardAdmin(request):
@@ -76,3 +77,45 @@ def userList(request):
         'users': users,
     }
     return render(request, "dashboard/dash-admin/user-list.html", context)
+
+
+def createUser(request):
+    if request.method == 'POST':
+        form = UserRegistrationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Create User Successfull")
+            return redirect("user-list")
+    else:
+        form = UserRegistrationForm()
+        
+    context = {
+        'form': form
+    }
+    
+    return render(request, "dashboard/dash-admin/create-user.html", context)
+
+
+def userUpdate(request, user_id):
+    user = CustomUser.objects.get(id=user_id)
+    if request.method == 'POST':
+        form = UserForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Update Successfull")
+            return redirect('user-list')
+    else:
+        form = UserForm(instance=user)
+        
+    context = {
+        'form': form
+    }
+    
+    return render(request, "dashboard/dash-admin/user-update.html", context)
+
+
+def deleteUser(request, user_id):
+    user = CustomUser.objects.get(id=user_id)
+    user.delete()
+    messages.success(request, "Delete Successfull")
+    return redirect('user-list')

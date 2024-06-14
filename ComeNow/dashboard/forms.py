@@ -66,9 +66,19 @@ class UserForm(forms.ModelForm):
         'id': 'email',
         'placeholder': 'email',
     }))
+    password1 = forms.CharField(widget=forms.PasswordInput(attrs={
+        'class': 'form-control',
+        'type': 'password',
+        'id': 'password1'
+    }))
+    password2 = forms.CharField(widget=forms.PasswordInput(attrs={
+        'class': 'form-control',
+        'type': 'password',
+        'id': 'password2'
+    }))
     class Meta:
         model = CustomUser
-        fields = ('username', 'first_name', 'last_name', 'email')
+        fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2')
         
         widgets = {
             'username': forms.TextInput(attrs={
@@ -89,4 +99,38 @@ class UserForm(forms.ModelForm):
                 'id': 'last_name',
                 'placeholder': 'last name'
             }),
+        }
+        
+
+from django.contrib.auth.forms import UserCreationForm
+
+class UserRegistrationForm(UserCreationForm):
+    password1 = forms.CharField(widget=forms.PasswordInput(attrs={
+        'class': 'form-control',
+    }))
+    password2 = forms.CharField(widget=forms.PasswordInput(attrs={
+        'class': 'form-control',
+    }))
+    
+    class Meta:
+        model = CustomUser
+        fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2')
+        
+        widgets = {
+            'username': forms.TextInput(attrs={
+                'class': 'form-control',
+                'type': 'text',
+            }),
+            'first_name': forms.TextInput(attrs={
+                'class': 'form-control',
+                'type': 'text',
+            }),
+            'last_name': forms.TextInput(attrs={
+                'class': 'form-control',
+                'type': 'text',
+            }),
+            'email': forms.EmailInput(attrs={
+                'class': 'form-control',
+                'type': 'text',
+            })
         }

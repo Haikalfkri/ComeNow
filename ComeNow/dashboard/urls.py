@@ -9,4 +9,7 @@ urlpatterns = [
     
     
     path("user-list/", views.userList, name="user-list"),
+    path("create-user", views.createUser, name="create-user"),
+    path("update-user/<int:user_id>/", views.userUpdate, name="update-user"),
+    path("delete-user/<int:user_id>/", views.deleteUser, name='delete-user'),
 ]
