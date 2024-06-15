@@ -57,3 +57,11 @@ def eventFav(request):
     
     event.save()
     return redirect('detail-page', id=event_id)
+
+
+def aboutPage(request):
+    return render(request, "base/about.html")
+
+
+def contactPage(request):
+    return render(request, "base/contact.html")

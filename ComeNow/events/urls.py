@@ -6,4 +6,7 @@ urlpatterns = [
     path("detail/<int:id>/", views.DetailPage, name="detail-page"),
     path("event-like/", views.eventLike, name="event-like"),
     path("event-fav/", views.eventFav, name="event-fav"),
+    
+    path("about/", views.aboutPage, name="about"),
+    path("contact/", views.contactPage, name="contact"),
 ]

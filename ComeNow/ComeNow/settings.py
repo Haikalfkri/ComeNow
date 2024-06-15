@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     "authentication",
     "events",
     "posts",
-    "adminDashboard",
     "dashboard",
 ]
 

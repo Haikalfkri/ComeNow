@@ -119,3 +119,6 @@ def deleteUser(request, user_id):
     user.delete()
     messages.success(request, "Delete Successfull")
     return redirect('user-list')
+
+
+
