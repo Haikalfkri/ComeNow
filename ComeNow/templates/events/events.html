@@ -22,7 +22,7 @@
                         <div class="card-body">
                             <p class="card-title" id="event-date">{{ event.event_date.date }}</p>
                             <p class="card-text" id="event-title">
-                                {{ event.name }}
+                                {{ event.name|truncatechars:40 }}
                             </p>
                         </div>
                     </a>

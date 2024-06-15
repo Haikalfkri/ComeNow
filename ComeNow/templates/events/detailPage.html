@@ -30,12 +30,15 @@
         text-decoration: none;
     }
 
+    #description {
+        margin-top: 30px;
+    }
+
 </style>
 
 <div id="detail-page">
     <div id="detail-body">
-        <div id="top-div" class="d-flex justify-content-center">
-            <p id="title">{{ event.name }}</p>
+        <div id="top-div" class="d-flex justify-content-center">\
             <div class="like-icon">
                 {% if user.is_authenticated %}
                     {% if request.user in event.liked_by.all %}
@@ -92,6 +95,10 @@
         
         <div id="detail-image">
             <img class="card-img-top" src="{{ event.imageUrl }}" alt="">
+        </div>
+
+        <div class="mt-5" id="title-div">
+            <p id="title">{{ event.name }}</p>
         </div>
 
         <div id="description">
