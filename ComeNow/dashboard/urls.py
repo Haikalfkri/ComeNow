@@ -15,5 +15,6 @@ urlpatterns = [
     
     
     # user dashboard
-    
+    path("like-events", views.eventLike, name="like-events"),
+    path("saved-events", views.eventSaved, name='saved-events'),
 ]

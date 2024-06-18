@@ -26,9 +26,9 @@
     <h1>Dashboard</h1>
 
     <div class="row mt-5">
-        <a href="" id="events-link">Like Event</a>
-        <a href="" id="users-link">Event Saved</a>
-        <a href="" id="users-link">Profile</a>
+        <a href="{% url 'like-events' %}" id="events-link">Like Event</a>
+        <a href="{% url 'saved-events' %}" id="saved-events">Event Saved</a>
+        <a href="" id="user-profile">Profile</a>
     </div>
 
     <div>
@@ -42,11 +42,11 @@
     document.addEventListener('DOMContentLoaded', function() {
         var currentUrl = window.location.href;
         var eventLink = document.getElementById('events-link');
-        var userLink = document.getElementById('users-link');
+        var userLink = document.getElementById('saved-events');
 
-        if (currentUrl.includes("{% url 'event-list' %}")) {
+        if (currentUrl.includes("{% url 'like-events' %}")) {
             eventLink.classList.add('active');
-        } else if (currentUrl.includes("{% url 'user-list' %}")) {
+        } else if (currentUrl.includes("{% url 'saved-events' %}")) {
             userLink.classList.add('active');
         }
 

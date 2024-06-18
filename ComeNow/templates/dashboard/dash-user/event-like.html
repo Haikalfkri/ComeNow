@@ -1,6 +1,57 @@
 {% extends 'dashboard/dash-user/dashboard.html' %}
 
-
 {% block body %}
+
+<style>
+    .card {
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        transition: transform 0.2s;
+    }
+    .card:hover {
+        transform: scale(1.05);
+    }
+    .card-img-top {
+        height: 200px;
+        object-fit: cover;
+    }
+    .card-body {
+        text-align: center;
+    }
+    #event-date {
+        font-size: 0.9em;
+        color: gray;
+    }
+    #event-title {
+        font-weight: bold;
+        color: #333;
+    }
+    .row {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+    }
+    .position-relative {
+        position: relative;
+    }
+</style>
+
+<div class="row">
+    {% for event in liked_events %}
+    <div class="col-sm-4 mt-5 position-relative">
+        <div class="card">
+            <a href="{% url 'detail-page' event.id %}" id="card-body-link">
+                <img class="card-img-top" src="{{ event.imageUrl }}" alt="">
+                <div class="card-body">
+                    <p class="card-title" id="event-date">{{ event.event_date|date:"F j, Y" }}</p>
+                    <p class="card-text" id="event-title">
+                        {{ event.name|truncatechars:25 }}
+                    </p>
+                </div>
+            </a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
 
 {% endblock %}

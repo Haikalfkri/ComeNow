@@ -47,8 +47,14 @@
                         <img src="{{ user.UserProfile.profileImageUrl }}" alt="Profile Picture" class="rounded-circle" width="30" height="30">
                     </a>
                     <div class="dropdown-menu dropdown-menu-right">
-                            <a class="nav-link dropdown-item" href="{% url 'event-list' %}">Dashboard</a>
-                            <a class="nav-link dropdown-item" href="{% url 'logout' %}">Logout</a>
+                        {% for group_for in request.user.groups.all %}
+                            {% if group_for.name == 'admin' %}
+                                <a class="nav-link dropdown-item" href="{% url 'event-list' %}">Dashboard</a>
+                            {% elif group_for.name == 'user' %}
+                                <a class="nav-link dropdown-item" href="{% url 'like-events' %}">Dashboard</a>
+                            {% endif %}
+                        {% endfor %}
+                        <a class="nav-link dropdown-item" href="{% url 'logout' %}">Logout</a>
                     </div>
                 </div>
                 {% else %}

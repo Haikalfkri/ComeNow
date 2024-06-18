@@ -61,8 +61,6 @@ def UserLogin(request):
     
     return render(request, "authentication/login.html")
 
-
-@unauthenticated_user
 def UserLogout(request):
     logout(request)
     messages.success(request, "Logout Successfully")

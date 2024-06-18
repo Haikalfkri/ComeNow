@@ -142,4 +142,22 @@ def deleteUser(request, user_id):
 @login_required
 @allowed_users(allowed_roles=['user'])
 def eventLike(request):
-    pass
+    user = request.user
+    liked_events = EventModel.objects.filter(liked_by=user)
+    context = {
+        'liked_events': liked_events
+    }
+        
+    return render(request, "dashboard/dash-user/event-like.html", context)
+
+
+@login_required
+@allowed_users(allowed_roles=['user'])
+def eventSaved(request):
+    user = request.user
+    saved_events = EventModel.objects.filter(favorites=user)
+    context = {
+        'saved_events': saved_events
+    }
+    
+    return render(request, "dashboard/dash-user/event-saved.html", context)

@@ -3,7 +3,7 @@
 {% block content %}
 
 <style>
-    #admin-dashboard-body h1 {
+    #admin-dashbord-body h1 {
         text-align: center;
     }
     .row {
@@ -22,13 +22,12 @@
     }
 </style>
 
-<div class="mt-5" id="admin-dashboard-body">
+<div class="mt-5" id="admin-dashbord-body">
     <h1>Dashboard</h1>
 
     <div class="row mt-5">
-        <a href="{% url 'event-list' %}" id="events-link">Like Event</a>
-        <a href="{% url 'event-saved' %}" id="events-saved-link">Event Saved</a>
-        <a href="{% url 'profile' %}" id="profile-link">Profile</a>
+        <a href="{% url 'event-list' %}" id="events-link">Events</a>
+        <a href="{% url 'user-list' %}" id="users-link">Users</a>
     </div>
 
     <div>
@@ -41,21 +40,17 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         var currentUrl = window.location.href;
+        var eventLink = document.getElementById('events-link');
+        var userLink = document.getElementById('users-link');
 
-        var links = [
-            { id: 'events-link', url: "{% url 'event-list' %}" },
-            { id: 'events-saved-link', url: "{% url 'event-saved' %}" },
-            { id: 'profile-link', url: "{% url 'profile' %}" }
-        ];
-
-        links.forEach(function(link) {
-            if (currentUrl.includes(link.url)) {
-                document.getElementById(link.id).classList.add('active');
-            }
-        });
+        if (currentUrl.includes("{% url 'event-list' %}")) {
+            eventLink.classList.add('active');
+        } else if (currentUrl.includes("{% url 'user-list' %}")) {
+            userLink.classList.add('active');
+        }
 
         document.querySelectorAll('.row a').forEach(link => {
-            link.addEventListener('click', function() {
+            link.addEventListener('click', function(event) {
                 document.querySelectorAll('.row a').forEach(link => link.classList.remove('active'));
                 this.classList.add('active');
             });
