@@ -38,7 +38,7 @@
 
 <div id="detail-page">
     <div id="detail-body">
-        <div id="top-div" class="d-flex justify-content-center">\
+        <div id="top-div" class="d-flex justify-content-center">
             <div class="like-icon">
                 {% if user.is_authenticated %}
                     {% if request.user in event.liked_by.all %}
