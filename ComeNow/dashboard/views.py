@@ -1,19 +1,21 @@
 from django.shortcuts import render, redirect
 from django.db.models import Case, When, Value, BooleanField
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 from events.models import EventModel
 from authentication.models import CustomUser
 from .forms import CreateEventForm, UserForm
 from authentication.forms import UserRegistrationForm
+from .decorators import allowed_users
 
 # Create your views here.
-def dashboardAdmin(request):
-    return render(request, "dashboard/dash-admin/dashboard.html")
 
+# dashboard admin
 
 # Event Management
-
+@login_required
+@allowed_users(allowed_roles=['admin'])
 def eventList(request):
     events = EventModel.objects.all().order_by('-event_date')
     context = {
@@ -22,6 +24,8 @@ def eventList(request):
     return render(request, "dashboard/dash-admin/event-list.html", context)
 
 
+@login_required
+@allowed_users(allowed_roles=['admin'])
 def createEvent(request):
     if request.method == 'POST':
         form = CreateEventForm(request.POST, request.FILES)
@@ -38,6 +42,8 @@ def createEvent(request):
     return render(request, "dashboard/dash-admin/create-event.html", context)
 
 
+@login_required
+@allowed_users(allowed_roles=['admin'])
 def updateEvent(request, event_id):
     event = EventModel.objects.get(id=event_id)
     if request.method == "POST":
@@ -55,6 +61,9 @@ def updateEvent(request, event_id):
     
     return render(request, "dashboard/dash-admin/update-event.html", context)
 
+
+@login_required
+@allowed_users(allowed_roles=['admin'])
 def deleteEvent(request, event_id):
     event = EventModel.objects.get(id=event_id)
     event.delete()
@@ -62,9 +71,9 @@ def deleteEvent(request, event_id):
     return redirect('event-list')
     
 
-
 # User Manegement
-
+@login_required
+@allowed_users(allowed_roles=['admin'])
 def userList(request):
     users = CustomUser.objects.all().annotate(
         is_admin=Case(
@@ -79,6 +88,8 @@ def userList(request):
     return render(request, "dashboard/dash-admin/user-list.html", context)
 
 
+@login_required
+@allowed_users(allowed_roles=['admin'])
 def createUser(request):
     if request.method == 'POST':
         form = UserRegistrationForm(request.POST)
@@ -96,6 +107,8 @@ def createUser(request):
     return render(request, "dashboard/dash-admin/create-user.html", context)
 
 
+@login_required
+@allowed_users(allowed_roles=['admin'])
 def userUpdate(request, user_id):
     user = CustomUser.objects.get(id=user_id)
     if request.method == 'POST':
@@ -114,6 +127,8 @@ def userUpdate(request, user_id):
     return render(request, "dashboard/dash-admin/user-update.html", context)
 
 
+@login_required
+@allowed_users(allowed_roles=['admin'])
 def deleteUser(request, user_id):
     user = CustomUser.objects.get(id=user_id)
     user.delete()
@@ -122,3 +137,9 @@ def deleteUser(request, user_id):
 
 
 
+# user dashboard
+
+@login_required
+@allowed_users(allowed_roles=['user'])
+def eventLike(request):
+    pass
