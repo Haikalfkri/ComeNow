@@ -1,0 +1,62 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+
+<style>
+    #admin-dashbord-body h1 {
+        text-align: center;
+    }
+    .row {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+    .row a {
+        margin: 0 15px;
+        text-decoration: none;
+        color: black;
+        font-size: 18px;
+    }
+    .row a.active {
+        border-bottom: 2px solid black;
+    }
+</style>
+
+<div class="mt-5" id="admin-dashbord-body">
+    <h1>Dashboard</h1>
+
+    <div class="row mt-5">
+        <a href="" id="events-link">Like Event</a>
+        <a href="" id="users-link">Event Saved</a>
+        <a href="" id="users-link">Profile</a>
+    </div>
+
+    <div>
+        {% block body %}
+
+        {% endblock %}
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var currentUrl = window.location.href;
+        var eventLink = document.getElementById('events-link');
+        var userLink = document.getElementById('users-link');
+
+        if (currentUrl.includes("{% url 'event-list' %}")) {
+            eventLink.classList.add('active');
+        } else if (currentUrl.includes("{% url 'user-list' %}")) {
+            userLink.classList.add('active');
+        }
+
+        document.querySelectorAll('.row a').forEach(link => {
+            link.addEventListener('click', function(event) {
+                document.querySelectorAll('.row a').forEach(link => link.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+    });
+</script>
+
+{% endblock %}

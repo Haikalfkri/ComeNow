@@ -2,9 +2,9 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 from django.contrib.auth.models import Group
-from django.contrib.auth.decorators import login_required
 
 from .forms import UserRegistrationForm
+from .decorators import unauthenticated_user
 
 # Create your views here.
 # @login_required
@@ -20,7 +20,7 @@ from .forms import UserRegistrationForm
 #         return redirect('login')
 
 
-
+@unauthenticated_user
 def UserRegister(request):
     if request.method == "POST":
         form = UserRegistrationForm(request.POST)
@@ -44,6 +44,7 @@ def UserRegister(request):
     return render(request, "authentication/register.html", context)
 
 
+@unauthenticated_user
 def UserLogin(request):
     if request.method == "POST":
         username = request.POST.get('username')
@@ -61,6 +62,7 @@ def UserLogin(request):
     return render(request, "authentication/login.html")
 
 
+@unauthenticated_user
 def UserLogout(request):
     logout(request)
     messages.success(request, "Logout Successfully")
