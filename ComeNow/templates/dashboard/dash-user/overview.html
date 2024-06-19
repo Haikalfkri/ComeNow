@@ -1,0 +1,48 @@
+{% extends 'dashboard/dash-user/base-profile.html' %}
+
+{% block profile %}
+
+<h5 class="mb-3">About</h5>
+            <p class="lead mb-3">{{ user_profile.bio }}</p>
+            <h5 class="mb-3">Profile</h5>
+            <div class="row g-0">
+              <div class="col-5 col-md-3 bg-light border-bottom border-white border-3">
+                <div class="p-2">First Name</div>
+              </div>
+              <div class="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
+                <div class="p-2">{{ user.first_name }}</div>
+              </div>
+              <div class="col-5 col-md-3 bg-light border-bottom border-white border-3">
+                <div class="p-2">Last Name</div>
+              </div>
+              <div class="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
+                <div class="p-2">{{ user.last_name }}</div>
+              </div>
+              <div class="col-5 col-md-3 bg-light border-bottom border-white border-3">
+                <div class="p-2">Education</div>
+              </div>
+              <div class="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
+                <div class="p-2">{{ user_profile.education }}</div>
+              </div>
+              <div class="col-5 col-md-3 bg-light border-bottom border-white border-3">
+                <div class="p-2">Address</div>
+              </div>
+              <div class="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
+                <div class="p-2">{{ user_profile.address }}</div>
+              </div>
+              <div class="col-5 col-md-3 bg-light border-bottom border-white border-3">
+                <div class="p-2">Phone</div>
+              </div>
+              <div class="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
+                <div class="p-2">{{ user_profile.phone_number }}</div>
+              </div>
+              <div class="col-5 col-md-3 bg-light border-bottom border-white border-3">
+                <div class="p-2">Email</div>
+              </div>
+              <div class="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
+                <div class="p-2">{{ user.email }}</div>
+              </div>
+            </div>
+          </div>
+
+{% endblock %}

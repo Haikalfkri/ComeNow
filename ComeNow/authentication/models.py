@@ -22,9 +22,12 @@ class UserProfile(models.Model):
     address = models.TextField(blank=True)
     gender = models.CharField(max_length=10, choices=GENDER_CHOICES, blank=True)
     phone_number = PhoneNumberField(blank=True)
+    education = models.CharField(max_length=255, blank=True)
     bio = models.TextField(blank=True)
     profile_picture = models.ImageField(upload_to="Profiles/", default="Profiles/default_image.jpg")
     
+    follow = models.ManyToManyField(CustomUser, related_name="follow", blank=True)
+    follow_count = models.BigIntegerField(default=0)
     
     def profileImageUrl(self):
         try:

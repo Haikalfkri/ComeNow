@@ -1,7 +1,7 @@
 from django import forms
 from events.models import EventModel
-from authentication.models import CustomUser
-
+from authentication.models import CustomUser, UserProfile
+from phonenumber_field.modelfields import PhoneNumberField
 
 class CreateEventForm(forms.ModelForm):
     event_date = forms.DateTimeField(widget=forms.DateTimeInput(attrs={
@@ -133,4 +133,38 @@ class UserRegistrationForm(UserCreationForm):
                 'class': 'form-control',
                 'type': 'text',
             })
+        }
+        
+        
+
+class UpdateProfileForm(forms.ModelForm):
+    # phone_number = PhoneNumberField(widgets=forms.TextInput(attrs={
+    #     'type': 'tel',
+    #     'class': 'form-control',
+    #     'id': 'inputPhone',
+    #     'placeholder': 'Enter Phone Number'
+    # }))
+    class Meta:
+        model = UserProfile
+        fields = ('education', 'phone_number', 'address', 'bio')
+        
+        widgets = {
+            'education': forms.TextInput(attrs={
+                'type': 'text',
+                'id': 'inputEducation',
+                'placeholder': 'Enter Education',
+                'class': 'form-control'
+            }),
+            'address': forms.TextInput(attrs={
+                'type': 'text',
+                'id': 'inputAddress',
+                'placeholder': 'Enter Address',
+                'class': 'form-control'
+            }),
+            'bio': forms.Textarea(attrs={
+                'class': 'form-control',
+                'rows': '4',
+                'id': 'inputAbout',
+                'placeholder': 'Enter About Information'
+            }),     
         }

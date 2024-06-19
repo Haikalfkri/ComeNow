@@ -28,7 +28,7 @@
     <div class="row mt-5 row-user">
         <a href="{% url 'like-events' %}" id="events-link">Like Events</a>
         <a href="{% url 'saved-events' %}" id="saved-events">Saved Events</a>
-        <a href="" id="user-profile">Profile</a>
+        <a href="{% url 'user-overview' request.user.id %}" id="user-profile">Profile</a>
     </div>
 
     <div>
@@ -43,11 +43,14 @@
         var currentUrl = window.location.href;
         var eventLink = document.getElementById('events-link');
         var userLink = document.getElementById('saved-events');
+        var profileLink = document.getElementById('user-profile');
 
         if (currentUrl.includes("{% url 'like-events' %}")) {
             eventLink.classList.add('active');
         } else if (currentUrl.includes("{% url 'saved-events' %}")) {
             userLink.classList.add('active');
+        } else if (currentUrl.includes("{% url 'user-overview' request.user.id %}")) {
+            profileLink.classList.add('active');
         }
 
         document.querySelectorAll('.row-user a').forEach(link => {

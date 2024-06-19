@@ -17,4 +17,8 @@ urlpatterns = [
     # user dashboard
     path("like-events", views.eventLike, name="like-events"),
     path("saved-events", views.eventSaved, name='saved-events'),
+    
+    #user profile
+    path("overview/<int:id>/", views.userOverview, name="user-overview"),
+    path("update-profiles/<int:user_id>/", views.userProfile, name="update-profiles")
 ]

@@ -1,0 +1,132 @@
+{% extends 'dashboard/dash-user/dashboard.html' %}
+
+{% load static %}
+
+{% block body %}
+
+<style>
+    .oval-img {
+        width: 150px; /* Set the desired width */
+        height: 150px; /* Set the same height as width to maintain aspect ratio */
+        border-radius: 50%; /* Make the image round (50% of the width/height) */
+        object-fit: cover; /* Ensure the image covers the oval shape without stretching */
+        display: block; /* Ensure the image behaves as a block element */
+        margin: 0 auto; /* Center the image horizontally */
+    }
+
+    .profile-card {
+        border-radius: 10px; /* Rounded corners */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Box shadow */
+        transition: box-shadow 0.3s ease; /* Smooth transition on hover */
+    }
+
+    .about-me-card {
+        border-radius: 10px; /* Rounded corners */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Box shadow */
+        transition: box-shadow 0.3s ease; /* Smooth transition on hover */
+    }
+    .card {
+        border-radius: 10px; /* Adjust the border radius as needed */
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Adjust the shadow properties as needed */
+        padding: 20px; /* Optional: Add padding inside the card */
+    }    
+</style>
+
+{% if user.is_authenticated %}
+<div class="row mt-5">
+    <!-- Left Card -->
+    <div class="col-md-3">
+        <div class="card profile-card">
+            <img class="card-img-top oval-img" src="
+            {% if request.user.userprofile.profile_picture.url %}
+                {{ request.user.userprofile.profile_picture.url }}
+            {% else %}
+                {% static 'img/Profiles/default_image.jpg' %}
+            {% endif %}">
+            <div class="card-body">
+                <h5 class="card-title d-flex justify-content-center">{{ request.user.username }}</h5>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Followers : <span class="ml-2">0</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Following : <span class="ml-2">0</span>
+                </li>
+            </ul>
+            <button class="btn btn-outline-primary mt-3 mb-3 w-75 ml-auto mr-auto">Follow</button>
+        </div>
+
+        <div class="card mt-4 about-me-card">
+            <div class="card-header bg-primary text-white">About me</div>
+            <div class="card-body">
+                <ul class="list-group list-group-flush mb-0">
+                    <li class="list-group-item">
+                        <h6 class="mb-1">
+                            <span class="me-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-mortarboard-fill" viewBox="0 0 16 16">
+                                    <path d="M8.211 2.047a.5.5 0 0 0-.422 0l-7.5 3.5a.5.5 0 0 0 .025.917l7.5 3a.5.5 0 0 0 .372 0L14 7.14V13a1 1 0 0 0-1 1v2h3v-2a1 1 0 0 0-1-1V6.739l.686-.275a.5.5 0 0 0 .025-.917z"/>
+                                    <path d="M4.176 9.032a.5.5 0 0 0-.656.327l-.5 1.7a.5.5 0 0 0 .294.605l4.5 1.8a.5.5 0 0 0 .372 0l4.5-1.8a.5.5 0 0 0 .294-.605l-.5-1.7a.5.5 0 0 0-.656-.327L8 10.466z"/>
+                                </svg>
+                            </span>
+                            Education
+                        </h6>
+                        <span>{{ request.user.userProfile.education }}</span>
+                    </li>
+                    <li class="list-group-item">
+                        <h6 class="mb-1">
+                            <span class="me-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt-fill" viewBox="0 0 16 16">
+                                    <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10m0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6"/>
+                                </svg>
+                            </span>
+                            Location
+                        </h6>
+                        <span>{{ request.user.userProfile.address }}</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Right Card -->
+    <div class="col-md-9">
+        <div class="card">
+            <div class="row mb-3 row-user mr-auto">
+                <a href="{% url 'user-overview' request.user.id %}" id="overview-link">Overview</a>
+                <a href="{% url 'update-profiles' request.user.id %}" id="update-profile">Profile</a>
+                <a href="" id="password-link">Password</a>
+            </div>
+            <hr>
+            
+            {% block profile %}
+
+            {% endblock %}
+
+        </div>
+</div>
+{% endif %}
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var currentUrl = window.location.href;
+        var overviewLink = document.getElementById('overview-link');
+        var updateprofileLink = document.getElementById('update-profile');
+        var passwordLink = document.getElementById('password-link');
+
+        if (currentUrl.includes("{% url 'user-overview' request.user.id %}")) {
+            overviewLink.classList.add('active');
+        } else if (currentUrl.includes("{% url 'update-profiles' request.user.id %}")) {
+            updateprofileLink.classList.add('active');
+        }
+
+        document.querySelectorAll('.row-user a').forEach(link => {
+            link.addEventListener('click', function(event) {
+                document.querySelectorAll('.row-user a').forEach(link => link.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+    });
+</script>
+
+{% endblock %}

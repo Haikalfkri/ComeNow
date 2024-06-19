@@ -1,11 +1,11 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models import Case, When, Value, BooleanField
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
 from events.models import EventModel
-from authentication.models import CustomUser
-from .forms import CreateEventForm, UserForm
+from authentication.models import CustomUser, UserProfile
+from .forms import CreateEventForm, UserForm, UpdateProfileForm
 from authentication.forms import UserRegistrationForm
 from .decorators import allowed_users
 
@@ -161,3 +161,43 @@ def eventSaved(request):
     }
     
     return render(request, "dashboard/dash-user/event-saved.html", context)
+
+
+@login_required
+@allowed_users(allowed_roles=['user'])
+def userOverview(request, id):
+    user = get_object_or_404(CustomUser, id=id)
+    user_profile = get_object_or_404(UserProfile, username=user)
+    context = {
+        'user_profile': user_profile,
+        'user': user,
+    }
+    
+    return render(request, "dashboard/dash-user/overview.html", context)
+
+
+@login_required
+@allowed_users(allowed_roles=['user'])
+def userProfile(request, user_id):
+    user = get_object_or_404(CustomUser, id=user_id)
+    profile = get_object_or_404(UserProfile, username=user)
+    
+    if request.method == 'POST':
+        user_form = UserForm(request.POST, instance=user)
+        profile_form = UpdateProfileForm(request.POST, request.FILES, instance=profile)
+        
+        if profile_form.is_valid() and user_form.is_valid():
+            profile_form.save()
+            user_form.save()
+            messages.success(request, "Update Successfully")
+            return redirect('update-profiles')
+    else:
+        user_form = UserForm(instance=user)
+        profile_form = UpdateProfileForm(instance=profile)
+        
+    context = {
+        'profile_form': profile_form,
+        'user_form': user_form
+    }
+    
+    return render(request, "dashboard/dash-user/profile-view.html", context)
