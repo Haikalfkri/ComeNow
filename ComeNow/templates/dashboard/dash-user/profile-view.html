@@ -1,5 +1,7 @@
 {% extends 'dashboard/dash-user/base-profile.html' %}
 
+{% load static %}
+
 {% block profile %}
 
 {% if messages %}
@@ -11,12 +13,42 @@
   {% endfor %}
 {% endif %}
 
+{% if user_form.errors %}
+    <div class="alert alert-danger mt-4">
+        <ul>
+        {% for field, errors in user_form.errors.items %}
+            {% for error in errors %}
+                <li>{{ field }}: {{ error }}</li>
+            {% endfor %}
+        {% endfor %}
+        </ul>
+    </div>
+{% endif %}
+
+{% if profile_form.errors %}
+    <div class="alert alert-danger mt-4">
+        <ul>
+        {% for field, errors in profile_form.errors.items %}
+            {% for error in errors %}
+                <li>{{ field }}: {{ error }}</li>
+            {% endfor %}
+        {% endfor %}
+        </ul>
+    </div>
+{% endif %}
+
 <form method="POST" enctype="multipart/form-data" class="row gy-3 gy-xxl-4">
   {% csrf_token %}
     <div class="col-12">
         <div class="row gy-2 align-items-center">
             <div class="col-12">
-                <img src="{{ user_profile.profile_picture.url }}" class="img-fluid" alt="{{ user_profile.username }}" width="120px">
+                <img src="
+                    {% if request.user.userprofile.profile_picture.url %}
+                        {{ request.user.userprofile.profile_picture.url }}
+                    {% else %}
+                        {% static 'img/Profiles/default_image.jpg' %}
+                    {% endif %}"
+                " class="img-fluid" alt="{{ user_profile.username }}" width="120px">
             </div>
             <div class="col-12 mt-3">
                 
@@ -37,7 +69,7 @@
     </div>
     <div class="col-12 col-md-6 mt-3">
         <label for="inputPhone" class="form-label">Phone</label>
-        <input type="tel" class="form-control" id="inputPhone" value="+12486798745" placeholder="Enter phone number">
+        {{ profile_form.phone_number }}
     </div>
     <div class="col-12 col-md-6 mt-3">
         <label for="email" class="form-label">Email</label>

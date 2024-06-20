@@ -155,6 +155,12 @@ class UpdateProfileForm(forms.ModelForm):
                 'placeholder': 'Enter Education',
                 'class': 'form-control'
             }),
+            'phone_number': forms.TextInput(attrs={
+                'type': 'tel',
+                'id': 'inputPhone',
+                'placeholder': 'Enter Phone Number',
+                'class': 'form-control'
+            }),
             'address': forms.TextInput(attrs={
                 'type': 'text',
                 'id': 'inputAddress',
@@ -167,4 +173,31 @@ class UpdateProfileForm(forms.ModelForm):
                 'id': 'inputAbout',
                 'placeholder': 'Enter About Information'
             }),     
+        }
+        
+
+class LastandFirstNameForm(forms.ModelForm):
+    email = forms.EmailField(widget=forms.EmailInput(attrs={
+        'class': 'form-control',
+        'type': 'email',
+        'id': 'email',
+        'placeholder': 'email',
+    }))
+    class Meta:
+        model = CustomUser
+        fields = ('first_name', 'last_name', 'email')
+        
+        widgets = {
+            'first_name': forms.TextInput(attrs={
+                'class': 'form-control',
+                'type': 'text',
+                'id': 'first_name',
+                'placeholder': 'first name'
+            }),
+            'last_name': forms.TextInput(attrs={
+                'class': 'form-control',
+                'type': 'text',
+                'id': 'last_name',
+                'placeholder': 'last name'
+            }),
         }

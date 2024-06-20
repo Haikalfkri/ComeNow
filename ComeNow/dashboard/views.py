@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 
 from events.models import EventModel
 from authentication.models import CustomUser, UserProfile
-from .forms import CreateEventForm, UserForm, UpdateProfileForm
+from .forms import CreateEventForm, UserForm, UpdateProfileForm, LastandFirstNameForm
 from authentication.forms import UserRegistrationForm
 from .decorators import allowed_users
 
@@ -183,16 +183,16 @@ def userProfile(request, user_id):
     profile = get_object_or_404(UserProfile, username=user)
     
     if request.method == 'POST':
-        user_form = UserForm(request.POST, instance=user)
+        user_form = LastandFirstNameForm(request.POST, instance=user)
         profile_form = UpdateProfileForm(request.POST, request.FILES, instance=profile)
         
-        if profile_form.is_valid() and user_form.is_valid():
-            profile_form.save()
+        if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
+            profile_form.save()
             messages.success(request, "Update Successfully")
-            return redirect('update-profiles')
+            return redirect('update-profiles', user_id=user_id)
     else:
-        user_form = UserForm(instance=user)
+        user_form = LastandFirstNameForm(instance=user)
         profile_form = UpdateProfileForm(instance=profile)
         
     context = {
@@ -201,3 +201,9 @@ def userProfile(request, user_id):
     }
     
     return render(request, "dashboard/dash-user/profile-view.html", context)
+
+
+@login_required
+@allowed_users(allowed_roles=['user'])
+def changePasswordProfile(request, user_id):
+    return render(request, "dashboard/dash-user/password-change-view.html")

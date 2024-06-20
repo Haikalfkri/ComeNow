@@ -71,7 +71,7 @@
                             </span>
                             Education
                         </h6>
-                        <span>{{ request.user.userProfile.education }}</span>
+                        <span>{{ user.userProfile.education }}</span>
                     </li>
                     <li class="list-group-item">
                         <h6 class="mb-1">
@@ -95,7 +95,7 @@
             <div class="row mb-3 row-user mr-auto">
                 <a href="{% url 'user-overview' request.user.id %}" id="overview-link">Overview</a>
                 <a href="{% url 'update-profiles' request.user.id %}" id="update-profile">Profile</a>
-                <a href="" id="password-link">Password</a>
+                <a href="{% url 'change-password-profile' request.user.id %}" id="password-profile-link">Password</a>
             </div>
             <hr>
             
@@ -112,12 +112,14 @@
         var currentUrl = window.location.href;
         var overviewLink = document.getElementById('overview-link');
         var updateprofileLink = document.getElementById('update-profile');
-        var passwordLink = document.getElementById('password-link');
+        var passwordProfileLink = document.getElementById('password-profile-link');
 
         if (currentUrl.includes("{% url 'user-overview' request.user.id %}")) {
             overviewLink.classList.add('active');
         } else if (currentUrl.includes("{% url 'update-profiles' request.user.id %}")) {
             updateprofileLink.classList.add('active');
+        } else if (currentUrl.includes("{% url 'change-password-profile' request.user.id %}")) {
+            passwordProfileLink.classList.add('active');
         }
 
         document.querySelectorAll('.row-user a').forEach(link => {
