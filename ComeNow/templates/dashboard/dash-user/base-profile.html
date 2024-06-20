@@ -95,7 +95,7 @@
             <div class="row mb-3 row-user mr-auto">
                 <a href="{% url 'user-overview' request.user.id %}" id="overview-link">Overview</a>
                 <a href="{% url 'update-profiles' request.user.id %}" id="update-profile">Profile</a>
-                <a href="{% url 'change-password-profile' request.user.id %}" id="password-profile-link">Password</a>
+                <a href="{% url 'change-password-profile' %}" id="password-profile-link">Password</a>
             </div>
             <hr>
             
@@ -118,7 +118,7 @@
             overviewLink.classList.add('active');
         } else if (currentUrl.includes("{% url 'update-profiles' request.user.id %}")) {
             updateprofileLink.classList.add('active');
-        } else if (currentUrl.includes("{% url 'change-password-profile' request.user.id %}")) {
+        } else if (currentUrl.includes("{% url 'change-password-profile' %}")) {
             passwordProfileLink.classList.add('active');
         }
 

@@ -2,6 +2,15 @@
 
 {% block profile %}
 
+{% if messages %}
+  {% for message in messages %}
+      <div class="alert alert-success mt-4">
+        <a href="" class="close" data-dismiss="alert">x</a>
+        {{ message }}
+      </div>
+  {% endfor %}
+{% endif %}
+
 <h5 class="mb-3">About</h5>
             <p class="lead mb-3">{{ user_profile.bio }}</p>
             <h5 class="mb-3">Profile</h5>

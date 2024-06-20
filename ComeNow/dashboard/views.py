@@ -2,6 +2,12 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models import Case, When, Value, BooleanField
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth.views import PasswordChangeView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.messages.views import SuccessMessageMixin
+from django.urls import reverse_lazy
+
 
 from events.models import EventModel
 from authentication.models import CustomUser, UserProfile
@@ -203,7 +209,8 @@ def userProfile(request, user_id):
     return render(request, "dashboard/dash-user/profile-view.html", context)
 
 
-@login_required
-@allowed_users(allowed_roles=['user'])
-def changePasswordProfile(request, user_id):
-    return render(request, "dashboard/dash-user/password-change-view.html")
+class PasswordsChangeView(PasswordChangeView, LoginRequiredMixin, SuccessMessageMixin):
+    form_class = PasswordChangeForm
+    template_name = "dashboard/dash-user/password-change-view.html"
+    success_url = reverse_lazy('change-password-profile')
+    success_message = "Password Change Successfull"

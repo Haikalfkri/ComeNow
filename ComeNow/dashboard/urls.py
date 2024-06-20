@@ -21,5 +21,5 @@ urlpatterns = [
     #user profile
     path("overview/<int:id>/", views.userOverview, name="user-overview"),
     path("update-profiles/<int:user_id>/", views.userProfile, name="update-profiles"),
-    path("change-password-profile/<int:user_id>/", views.changePasswordProfile, name="change-password-profile")
+    path("change-password-profile/", views.PasswordsChangeView.as_view(), name="change-password-profile"),
 ]
