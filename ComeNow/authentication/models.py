@@ -36,10 +36,10 @@ class UserProfile(models.Model):
             return '/media/Profiles/default_image.jpg'
     
     def get_address(self):
-        return self.address if self.address else False
+        return self.address if self.address else ''
     
     def get_education(self):
-        return self.education if self.education else False
+        return self.education if self.education else ''
     
     def __str__(self):
         return f"{self.username.username}'s profile"
