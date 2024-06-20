@@ -188,6 +188,8 @@ def userProfile(request, user_id):
     user = get_object_or_404(CustomUser, id=user_id)
     profile = get_object_or_404(UserProfile, username=user)
     
+    profile_picture_url = profile.get_profile_image_url()
+    
     if request.method == 'POST':
         user_form = LastandFirstNameForm(request.POST, instance=user)
         profile_form = UpdateProfileForm(request.POST, request.FILES, instance=profile)
@@ -203,7 +205,8 @@ def userProfile(request, user_id):
         
     context = {
         'profile_form': profile_form,
-        'user_form': user_form
+        'user_form': user_form,
+        'profile_picture_url': profile_picture_url
     }
     
     return render(request, "dashboard/dash-user/profile-view.html", context)

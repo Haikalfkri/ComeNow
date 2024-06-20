@@ -138,15 +138,14 @@ class UserRegistrationForm(UserCreationForm):
         
 
 class UpdateProfileForm(forms.ModelForm):
-    # phone_number = PhoneNumberField(widgets=forms.TextInput(attrs={
-    #     'type': 'tel',
-    #     'class': 'form-control',
-    #     'id': 'inputPhone',
-    #     'placeholder': 'Enter Phone Number'
-    # }))
+    profile_picture = forms.ImageField(widget=forms.FileInput(attrs={
+        'class': 'form-control',
+        'type': 'file',
+        'id': 'profile-image'
+    }))
     class Meta:
         model = UserProfile
-        fields = ('education', 'phone_number', 'address', 'bio')
+        fields = ('profile_picture', 'education', 'phone_number', 'address', 'bio')
         
         widgets = {
             'education': forms.TextInput(attrs={
@@ -185,9 +184,15 @@ class LastandFirstNameForm(forms.ModelForm):
     }))
     class Meta:
         model = CustomUser
-        fields = ('first_name', 'last_name', 'email')
+        fields = ('username', 'first_name', 'last_name', 'email')
         
         widgets = {
+            'username': forms.TextInput(attrs={
+                'class': 'form-control',
+                'type': 'text',
+                'id': 'username',
+                'placeholder': 'username'
+            }),
             'first_name': forms.TextInput(attrs={
                 'class': 'form-control',
                 'type': 'text',

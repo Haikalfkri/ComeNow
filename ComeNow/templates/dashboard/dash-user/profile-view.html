@@ -1,7 +1,5 @@
 {% extends 'dashboard/dash-user/base-profile.html' %}
 
-{% load static %}
-
 {% block profile %}
 
 {% if messages %}
@@ -42,18 +40,20 @@
     <div class="col-12">
         <div class="row gy-2 align-items-center">
             <div class="col-12">
-                <img src="
-                    {% if request.user.userprofile.profile_picture.url %}
-                        {{ request.user.userprofile.profile_picture.url }}
-                    {% else %}
-                        {% static 'img/Profiles/default_image.jpg' %}
-                    {% endif %}"
-                " class="img-fluid" alt="{{ user_profile.username }}" width="120px">
+                <img src="{{ profile_picture_url }}" class="img-fluid" alt="{{ userprofile.username }}" width="120px">
             </div>
             <div class="col-12 mt-3">
                 
             </div>
         </div>
+    </div>
+    <div class="col-12 col-md-6 mt-3">
+        <label for="profile-image" class="form-label">Image</label>
+        {{ profile_form.profile_picture }}
+    </div>
+    <div class="col-12 col-md-6 mt-3">
+        <label for="username" class="form-label">Username</label>
+        {{ user_form.username }}
     </div>
     <div class="col-12 col-md-6 mt-3">
         <label for="first_name" class="form-label">First Name</label>

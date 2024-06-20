@@ -37,12 +37,7 @@
     <!-- Left Card -->
     <div class="col-md-3">
         <div class="card profile-card">
-            <img class="card-img-top oval-img" src="
-            {% if request.user.userprofile.profile_picture.url %}
-                {{ request.user.userprofile.profile_picture.url }}
-            {% else %}
-                {% static 'img/Profiles/default_image.jpg' %}
-            {% endif %}">
+            <img class="card-img-top oval-img" src="{{ request.user.get_profile_image_url }}">
             <div class="card-body">
                 <h5 class="card-title d-flex justify-content-center">{{ request.user.username }}</h5>
             </div>

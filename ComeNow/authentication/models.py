@@ -29,12 +29,11 @@ class UserProfile(models.Model):
     follow = models.ManyToManyField(CustomUser, related_name="follow", blank=True)
     follow_count = models.BigIntegerField(default=0)
     
-    def profileImageUrl(self):
-        try:
-            url = self.profile_picture.url
-        except:
-            url = ''
-        return url
+    def get_profile_image_url(self):
+        if self.profile_picture and hasattr(self.profile_picture, 'url'):
+            return self.profile_picture.url
+        else:
+            return '/media/Profiles/default_image.jpg'
         
     
     def __str__(self):
