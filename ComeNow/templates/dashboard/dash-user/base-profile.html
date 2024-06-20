@@ -37,7 +37,7 @@
     <!-- Left Card -->
     <div class="col-md-3">
         <div class="card profile-card">
-            <img class="card-img-top oval-img" src="{{ request.user.get_profile_image_url }}">
+            <img class="card-img-top oval-img" src="{{ request.user.userprofile.get_profile_image_url }}">
             <div class="card-body">
                 <h5 class="card-title d-flex justify-content-center">{{ request.user.username }}</h5>
             </div>
@@ -66,7 +66,7 @@
                             </span>
                             Education
                         </h6>
-                        <span>{{ user.userProfile.education }}</span>
+                        <span>{{ request.user.userProfile.education }}</span>
                     </li>
                     <li class="list-group-item">
                         <h6 class="mb-1">

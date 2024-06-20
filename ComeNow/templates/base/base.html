@@ -42,9 +42,9 @@
                  
 
                 {% if user.is_authenticated %}
-                <div class="dropdown nav-item">
-                    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
-                        <img src="{{ user.CustomUser.UserProfile.profile_picture.url }}" alt="Profile Picture" class="rounded-circle" width="30" height="30">
+                <div class="dropdown nav-item ml-3">
+                    <a class=" dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false" style="text-decoration: none; color: transparent">
+                        <img src="{{ request.user.userprofile.get_profile_image_url }}" alt="Profile Picture" class="rounded-circle" width="40" height="40">
                     </a>
                     <div class="dropdown-menu dropdown-menu-right">
                         {% for group_for in request.user.groups.all %}

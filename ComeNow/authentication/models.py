@@ -18,7 +18,7 @@ class UserProfile(models.Model):
         ('female', 'Female'),
     ]
     
-    username = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    username = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     address = models.TextField(blank=True)
     gender = models.CharField(max_length=10, choices=GENDER_CHOICES, blank=True)
     phone_number = PhoneNumberField(blank=True)
