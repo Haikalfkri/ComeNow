@@ -209,7 +209,7 @@ def userProfile(request, user_id):
     return render(request, "dashboard/dash-user/profile-view.html", context)
 
 
-class PasswordsChangeView(PasswordChangeView, LoginRequiredMixin, SuccessMessageMixin):
+class PasswordsChangeView(LoginRequiredMixin, SuccessMessageMixin, PasswordChangeView):
     form_class = PasswordChangeForm
     template_name = "dashboard/dash-user/password-change-view.html"
     success_url = reverse_lazy('change-password-profile')
