@@ -8,6 +8,8 @@ urlpatterns = [
     path("update-event/<int:event_id>/", views.updateEvent, name="update-event"),
     path("delete-event/<int:event_id>/", views.deleteEvent, name="delete-event"),
     
+    path("admin-analyze/", views.adminAnalyze, name="admin-analyze"),
+    
     # admin profile
     path("admin-overview/<int:id>/", views.adminOverview, name="admin-overview"),
     path("admin-profile/<int:user_id>/", views.adminProfile, name="admin-profile"),

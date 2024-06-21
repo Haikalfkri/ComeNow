@@ -11,7 +11,7 @@ from django.urls import reverse_lazy
 
 from events.models import EventModel
 from authentication.models import CustomUser, UserProfile
-from .forms import CreateEventForm, UserForm, UpdateProfileForm, LastandFirstNameForm
+from .forms import CreateEventForm, UserForm, UpdateProfileForm, LastandFirstNameForm, PasswordChangingForm
 from authentication.forms import UserRegistrationForm
 from .decorators import allowed_users
 
@@ -187,8 +187,13 @@ def adminProfile(request, user_id):
     
     return render(request, "dashboard/dash-admin/profile-view.html", context)
 
+@login_required
+@allowed_users(allowed_roles=['admin'])
+def adminAnalyze(request):
+    return render(request, "dashboard/dash-admin/analyze.html")
 
 class adminPasswordChangeView(LoginRequiredMixin, SuccessMessageMixin, PasswordChangeView):
+    # form_class = PasswordChangingForm
     form_class = PasswordChangeForm
     template_name = "dashboard/dash-admin/password-change-view.html"
     success_url = reverse_lazy("admin-password-change")

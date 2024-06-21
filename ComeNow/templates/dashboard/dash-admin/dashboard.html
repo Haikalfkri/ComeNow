@@ -28,7 +28,7 @@
     <div class="row mt-5 row-admin">
         <a href="{% url 'event-list' %}" id="events-link">Events</a>
         <a href="{% url 'user-list' %}" id="users-link">Users</a>
-        <a href="" id="analyze-link">Analyze</a>
+        <a href="{% url 'admin-analyze' %}" id="admin-analyze-link">Analyze</a>
         <a href="{% url 'admin-overview' request.user.id %}" id="admin-profile-link">Profile</a>
     </div>
 
@@ -44,12 +44,15 @@
         var currentUrl = window.location.href;
         var eventLink = document.getElementById('events-link');
         var userLink = document.getElementById('users-link');
+        var adminAnalyzeLink = document.getElementById('admin-analyze-link')
         var adminProfileLink = document.getElementById('admin-profile-link');
 
         if (currentUrl.includes("{% url 'event-list' %}")) {
             eventLink.classList.add('active');
         } else if (currentUrl.includes("{% url 'user-list' %}")) {
             userLink.classList.add('active');
+        } else if (currentUrl.includes("{% url 'admin-analyze' %}")) {
+            adminAnalyzeLink.classList.add('active');
         } else if (currentUrl.includes("{% url 'admin-overview' request.user.id %}")) {
             adminProfileLink.classList.add('active');
         }

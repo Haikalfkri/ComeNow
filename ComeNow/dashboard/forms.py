@@ -1,7 +1,7 @@
 from django import forms
 from events.models import EventModel
 from authentication.models import CustomUser, UserProfile
-from phonenumber_field.modelfields import PhoneNumberField
+from django.contrib.auth.forms import PasswordChangeForm
 
 class CreateEventForm(forms.ModelForm):
     event_date = forms.DateTimeField(widget=forms.DateTimeInput(attrs={
@@ -206,3 +206,25 @@ class LastandFirstNameForm(forms.ModelForm):
                 'placeholder': 'last name'
             }),
         }
+        
+        
+
+class PasswordChangingForm(PasswordChangeForm):
+    old_password = forms.CharField(widget=forms.PasswordInput(attrs={
+        'type': 'password',
+        'class': 'form-control',
+        'id': 'old_password'
+    })),
+    new_password1 = forms.CharField(widget=forms.PasswordInput(attrs={
+        'type': 'password',
+        'id': 'new_password1',
+        'class': 'form-control'
+    })),
+    new_password2 = forms.CharField(widget=forms.PasswordInput(attrs={
+        'type': 'password',
+        'class': 'form-control',
+        'id': 'new_password2'
+    }))
+    class Meta:
+        model = CustomUser
+        fields = ('old_password', 'new_password1', 'new_password2')
