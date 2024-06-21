@@ -7,7 +7,29 @@
 
 <div class="container mt-2">
   
+    <div id="Events">
+        <h4>Events</h4>
+        {% block events_chart %}
+        {% endblock %}
+    </div>
 
+    <div id="users">
+        <h4>Users</h4>
+        {% block users_chart %}
+        {% endblock %}
+    </div>
+
+    <div id="likes">
+        <h4>Likes</h4>
+        {% block likes_chart %}
+        {% endblock %}
+    </div>
+
+    <div id="favorites">
+        <h4>Favorites</h4>
+        {% block favorites_chart %}
+        {% endblock %}
+    </div>
 
 </div>
 
