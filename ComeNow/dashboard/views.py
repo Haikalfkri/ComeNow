@@ -174,7 +174,7 @@ def adminProfile(request, user_id):
             user_form.save()
             profile_form.save()
             messages.success(request, "Update Successfully")
-            return redirect('update-profiles', user_id=user_id)
+            return redirect('admin-profile', user_id=user_id)
     else:
         user_form = LastandFirstNameForm(instance=user)
         profile_form = UpdateProfileForm(instance=profile)
@@ -191,7 +191,7 @@ def adminProfile(request, user_id):
 class adminPasswordChangeView(LoginRequiredMixin, SuccessMessageMixin, PasswordChangeView):
     form_class = PasswordChangeForm
     template_name = "dashboard/dash-admin/password-change-view.html"
-    success_url = reverse_lazy("admin-change-password-profile")
+    success_url = reverse_lazy("admin-password-change")
     success_message = "Password Change Successfull"
 
 
