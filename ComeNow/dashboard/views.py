@@ -143,6 +143,59 @@ def deleteUser(request, user_id):
 
 
 
+# admin profile
+
+@login_required
+@allowed_users(allowed_roles=['admin'])
+def adminOverview(request, id):
+    user = get_object_or_404(CustomUser, id=id)
+    user_profile = get_object_or_404(UserProfile, username=user)
+    context = {
+        'user_profile': user_profile,
+        'user': user,
+    }
+    
+    return render(request, "dashboard/dash-admin/overview.html", context)
+
+
+@login_required
+@allowed_users(allowed_roles=['admin'])
+def adminProfile(request, user_id):
+    user = get_object_or_404(CustomUser, id=user_id)
+    profile = get_object_or_404(UserProfile, username=user)
+    
+    profile_picture_url = profile.get_profile_image_url()
+    
+    if request.method == 'POST':
+        user_form = LastandFirstNameForm(request.POST, instance=user)
+        profile_form = UpdateProfileForm(request.POST, request.FILES, instance=profile)
+        
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            messages.success(request, "Update Successfully")
+            return redirect('update-profiles', user_id=user_id)
+    else:
+        user_form = LastandFirstNameForm(instance=user)
+        profile_form = UpdateProfileForm(instance=profile)
+        
+    context = {
+        'profile_form': profile_form,
+        'user_form': user_form,
+        'profile_picture_url': profile_picture_url
+    }
+    
+    return render(request, "dashboard/dash-admin/profile-view.html", context)
+
+
+class adminPasswordChangeView(LoginRequiredMixin, SuccessMessageMixin, PasswordChangeView):
+    form_class = PasswordChangeForm
+    template_name = "dashboard/dash-admin/password-change-view.html"
+    success_url = reverse_lazy("admin-change-password-profile")
+    success_message = "Password Change Successfull"
+
+
+
 # user dashboard
 
 @login_required

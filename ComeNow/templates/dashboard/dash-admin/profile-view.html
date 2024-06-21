@@ -1,0 +1,91 @@
+{% extends 'dashboard/dash-admin/base-profile.html' %}
+
+{% block profile %}
+
+{% if messages %}
+  {% for message in messages %}
+      <div class="alert alert-success mt-4">
+        <a href="" class="close" data-dismiss="alert">x</a>
+        {{ message }}
+      </div>
+  {% endfor %}
+{% endif %}
+
+{% if user_form.errors %}
+    <div class="alert alert-danger mt-4">
+        <ul>
+        {% for field, errors in user_form.errors.items %}
+            {% for error in errors %}
+                <li>{{ field }}: {{ error }}</li>
+            {% endfor %}
+        {% endfor %}
+        </ul>
+    </div>
+{% endif %}
+
+{% if profile_form.errors %}
+    <div class="alert alert-danger mt-4">
+        <ul>
+        {% for field, errors in profile_form.errors.items %}
+            {% for error in errors %}
+                <li>{{ field }}: {{ error }}</li>
+            {% endfor %}
+        {% endfor %}
+        </ul>
+    </div>
+{% endif %}
+
+<form method="POST" enctype="multipart/form-data" class="row gy-3 gy-xxl-4">
+  {% csrf_token %}
+    <div class="col-12">
+        <div class="row gy-2 align-items-center">
+            <div class="col-12">
+                <img src="{{ profile_picture_url }}" class="img-fluid" alt="{{ userprofile.username }}" width="120px">
+            </div>
+            <div class="col-12 mt-3">
+                
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-md-6 mt-3">
+        <label for="profile-image" class="form-label">Image</label>
+        {{ profile_form.profile_picture }}
+    </div>
+    <div class="col-12 col-md-6 mt-3">
+        <label for="username" class="form-label">Username</label>
+        {{ user_form.username }}
+    </div>
+    <div class="col-12 col-md-6 mt-3">
+        <label for="first_name" class="form-label">First Name</label>
+        {{ user_form.first_name }}
+    </div>
+    <div class="col-12 col-md-6 mt-3">
+        <label for="last_name" class="form-label">Last Name</label>
+        {{ user_form.last_name }}
+    </div>
+    <div class="col-12 col-md-6 mt-3">
+        <label for="inputEducation" class="form-label">Education</label>
+        {{ profile_form.education }}
+    </div>
+    <div class="col-12 col-md-6 mt-3">
+        <label for="inputPhone" class="form-label">Phone</label>
+        {{ profile_form.phone_number }}
+    </div>
+    <div class="col-12 col-md-6 mt-3">
+        <label for="email" class="form-label">Email</label>
+        {{ user_form.email }}
+    </div>
+    <div class="col-12 col-md-6 mt-3">
+        <label for="inputAddress" class="form-label">Address</label>
+        {{ profile_form.address }}
+    </div>
+    <div class="col-12 mt-3">
+        <label for="inputAbout" class="form-label">About</label>
+        {{ profile_form.bio }}
+    </div>
+    <div class="col-12 mt-4">
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+    </div>
+</form>
+
+{% endblock %}

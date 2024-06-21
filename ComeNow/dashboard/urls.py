@@ -8,6 +8,11 @@ urlpatterns = [
     path("update-event/<int:event_id>/", views.updateEvent, name="update-event"),
     path("delete-event/<int:event_id>/", views.deleteEvent, name="delete-event"),
     
+    # admin profile
+    path("admin-overview/<int:id>/", views.adminOverview, name="admin-overview"),
+    path("admin-profile/<int:user_id>/", views.adminProfile, name="admin-profile"),
+    path("admin-change-password/", views.adminPasswordChangeView.as_view(), name="admin-password-change"),
+    
     path("user-list/", views.userList, name="user-list"),
     path("create-user", views.createUser, name="create-user"),
     path("update-user/<int:user_id>/", views.userUpdate, name="update-user"),
