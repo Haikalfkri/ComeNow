@@ -1,5 +1,36 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
+
+from .models import Posts
 
 # Create your views here.
 def UserPosts(request):
-    return render(request, "post/post.html")
+    user = request.user
+    posts = Posts.objects.all().order_by('-created')
+    if request.method == "POST":
+        post_body = request.POST.get('post')
+        
+        post = Posts.objects.create(user=user, body=post_body)
+        post.save()
+        
+        return redirect("posts")
+
+    context = {
+        'posts': posts
+    }
+    
+    return render(request, "post/post.html", context)
+
+
+def PostLike(request):
+    post_id = request.POST.get('post_id')
+    post = get_object_or_404(Posts, id=post_id)
+    
+    if post.liked_by.filter(id=request.user.id).exists():
+        post.liked_by.remove(request.user)
+        post.like_count -= 1
+    else:
+        post.liked_by.add(request.user)
+        post.like_count += 1
+        
+    post.save()
+    return redirect("posts")
