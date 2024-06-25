@@ -3,17 +3,25 @@
 
 {% block content %}
 
+<style>
+
+    .card {
+        box-shadow:  0 4px 4px 0 rgba(0, 0, 0, 0.2), 0 4px 4px 0 rgba(0, 0, 0, 0.19);
+    }
+
+</style>
+
     <div class="mt-5 mb-5">
         <div class="row">
             <div class="col-md-8">
                 <!-- Post Input Card -->
-                <div class="card mb-4 shadow-sm p-3" style="border-radius: 20px;"> 
+                <div class="card mb-4 p-3" style="border-radius: 20px;"> 
                     <div class="d-flex align-items-center">
                         <img src="{{ request.user.userprofile.get_profile_image_url }}" alt="{{ request.user.username }}" class="rounded-circle me-3" width="50" height="50">
                         <form method="post" class="flex-grow-1 ml-2">
                             {% csrf_token %}
                             <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Type something..." aria-label="Type Something" aria-describedby="post-input" name="post">
+                                <input type="text" class="form-control" placeholder="Type something..." aria-label="Type Something" aria-describedby="post-input" name="post" style="border-radius: 10px;">
                                 <button class="btn btn-primary" type="submit" id="post-input">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send" viewBox="0 0 16 16">
                                         <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576zm6.787-8.201L1.591 6.602l4.339 2.76z"/>
@@ -25,7 +33,7 @@
                 </div>  
 
                 {% for post in posts %}
-                <div class="card mt-3 shadow-sm p-3" style="border-radius: 20px;">
+                <div class="card mt-3 p-3" style="border-radius: 20px;">
                     <div class="d-flex align-items-center justify-content-between">
                         <div class="d-flex align-items-center">
                             <img src="{{ post.user.userprofile.get_profile_image_url }}" alt="{{ request.user.username }}" class="rounded-circle me-3" width="40" height="40">
@@ -73,22 +81,22 @@
             </div>
 
             <div class="col-md-4">
-                <div class="card shadow-sm p-3" style="border-radius: 20px;">
+                <div class="card p-3" style="border-radius: 20px;">
                     <span id="">Most Popular Events</span>
                     <hr>
                     <div class="d-flex mb-3">
-                        <img src="{{ request.user.userprofile.get_profile_image_url }}" alt="" width="100" height="80">
+                        <img src="{{ request.user.userprofile.get_profile_image_url }}" alt="" width="90" height="80">
                         <div class="ml-3">
-                            <h5>Learn Laravel</h5>
+                            <h6>Learn Laravel</h6>
                             <span  style="font-size: 16px; font-weight: w500; color: grey;">
                                 June 13, 2024, 2 p.m.
                             </span>
                         </div>
                     </div>
                     <div class="d-flex mb-3">
-                        <img src="{{ request.user.userprofile.get_profile_image_url }}" alt="" width="100" height="80">
+                        <img src="{{ request.user.userprofile.get_profile_image_url }}" alt="" width="90" height="80">
                         <div class="ml-3">
-                            <h5>Learn Laravel</h5>
+                            <h6>Learn Laravel</h6>
                             <span  style="font-size: 16px; font-weight: w500; color: grey;">
                                 June 13, 2024, 2 p.m.
                             </span>
