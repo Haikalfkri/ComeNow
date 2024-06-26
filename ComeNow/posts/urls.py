@@ -5,5 +5,5 @@ from posts import views
 urlpatterns = [
     path("posts/", views.UserPosts, name="posts"),
     path("post-like/", views.PostLike, name="post-like"),
-    path("comments/", views.PostComment, name="post-comment"),
+    path("comments/<int:post_id>/", views.PostComment, name="post-comments"),
 ]

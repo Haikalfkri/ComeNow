@@ -14,6 +14,8 @@ class Posts(models.Model):
     def __str__(self):
         return self.user.username
     
+    def get_comment_count(self):
+        return self.posts_comment.count()
     class Meta:
         verbose_name_plural = "Posts"
     
@@ -21,9 +23,9 @@ class Posts(models.Model):
 
 class Comments(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    posts = models.ManyToManyField(CustomUser, related_name="posts_comment")
+    post = models.ForeignKey(Posts, on_delete=models.CASCADE, related_name="posts_comment")
     created = models.DateTimeField(auto_now_add=True)
-    body = models.CharField(max_length=500)
+    body = models.CharField(max_length=100, blank=True)
     
     def __str__(self):
         return self.user.username

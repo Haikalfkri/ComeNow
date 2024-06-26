@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 
-from .models import Posts
+from .models import Posts, Comments
 
 # Create your views here.
 @login_required
@@ -39,5 +39,19 @@ def PostLike(request):
 
 
 @login_required()
-def PostComment(request):
-    return render(request, "comments.html")
+def PostComment(request, post_id):
+    post = get_object_or_404(Posts, id=post_id)
+    comments = Comments.objects.filter(post=post)
+    if request.method == "POST":
+        body = request.POST.get("comment")
+        comment = Comments.objects.create(user=request.user, body=body, post=post)
+        comment.save()
+        
+        return redirect("post-comments", post_id=post_id)
+    
+    context = {
+        'post': post,
+        'comments': comments
+    }
+    
+    return render(request, "post/comments.html", context)
