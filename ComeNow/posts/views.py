@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
 
 from .models import Posts
 
 # Create your views here.
+@login_required
 def UserPosts(request):
     user = request.user
     posts = Posts.objects.all().order_by('-created')
@@ -20,7 +22,7 @@ def UserPosts(request):
     
     return render(request, "post/post.html", context)
 
-
+@login_required
 def PostLike(request):
     post_id = request.POST.get('post_id')
     post = get_object_or_404(Posts, id=post_id)
@@ -34,3 +36,8 @@ def PostLike(request):
         
     post.save()
     return redirect("posts")
+
+
+@login_required()
+def PostComment(request):
+    return render(request, "comments.html")

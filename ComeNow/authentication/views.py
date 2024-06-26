@@ -55,7 +55,7 @@ def UserLogin(request):
         if user is not None:
             if user.is_active:
                 login(request, user)
-                return redirect('events')
+                return redirect('posts')
             else:
                 messages.error(request, "Invalid login")
     
