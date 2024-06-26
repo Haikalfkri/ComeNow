@@ -84,24 +84,17 @@
                 <div class="card p-3" style="border-radius: 20px;">
                     <span id="">Most Popular Events</span>
                     <hr>
+                    {% for event in events %}
                     <div class="d-flex mb-3">
-                        <img src="{{ request.user.userprofile.get_profile_image_url }}" alt="" width="90" height="80">
+                        <img src="{{ event.imageUrl }}" alt="" width="90" height="80">
                         <div class="ml-3">
-                            <h6>Learn Laravel</h6>
+                            <h6>{{ event.name }}</h6>
                             <span  style="font-size: 16px; font-weight: w500; color: grey;">
-                                June 13, 2024, 2 p.m.
+                                {{ event.date }}
                             </span>
                         </div>
                     </div>
-                    <div class="d-flex mb-3">
-                        <img src="{{ request.user.userprofile.get_profile_image_url }}" alt="" width="90" height="80">
-                        <div class="ml-3">
-                            <h6>Learn Laravel</h6>
-                            <span  style="font-size: 16px; font-weight: w500; color: grey;">
-                                June 13, 2024, 2 p.m.
-                            </span>
-                        </div>
-                    </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>

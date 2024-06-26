@@ -2,12 +2,14 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 
 from .models import Posts, Comments
+from events.models import EventModel
 
 # Create your views here.
 @login_required
 def UserPosts(request):
     user = request.user
     posts = Posts.objects.all().order_by('-created')
+    events = EventModel.objects.all().order_by('-liked_count')
     if request.method == "POST":
         post_body = request.POST.get('post')
         
@@ -17,6 +19,7 @@ def UserPosts(request):
         return redirect("posts")
 
     context = {
+        'events': events,
         'posts': posts
     }
     
