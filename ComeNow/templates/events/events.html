@@ -21,6 +21,16 @@
         <div class="mt-5" id="latest-event-title">
             <p>Latest Event</p>
         </div>
+        
+        <div class="input-group mb-3">
+            <form action="{% url 'events' %}" class="d-flex ml-auto w-25">
+                {% csrf_token %}
+                <input type="search" class="form-control" name="search" placeholder="Search..." style="border-radius: 10px;">
+                    <button class="btn btn-primary" type="submit" id="event-search-input">
+                        <span>Search</span>
+                    </button>
+            </form>
+        </div>
 
         <div class="row">
             {% for event in events %}
@@ -39,11 +49,7 @@
             </div>
             {% endfor %}
         </div>
-        
-
-        <div id="btn-seeMore" class="mt-5">
-            <a href="#" type="btn">See More</a>
-        </div>
+    
     </div>
 
 {% endblock %}

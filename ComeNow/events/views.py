@@ -2,10 +2,17 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 
 from events.models import EventModel
+from django.db.models import Q
 
 # Create your views here.
 def EventView(request):
-    events = EventModel.objects.all().order_by('-event_date')
+    search_event = request.GET.get('search')
+    
+    if search_event:
+        events = EventModel.objects.filter(Q(name__icontains=search_event) & Q(description__icontains=search_event))
+    else:
+        events = EventModel.objects.all().order_by('-event_date')[:10]
+    
     context = {
         'events': events
     }

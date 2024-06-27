@@ -9,7 +9,7 @@ from events.models import EventModel
 def UserPosts(request):
     user = request.user
     posts = Posts.objects.all().order_by('-created')
-    events = EventModel.objects.all().order_by('-liked_count')
+    events = EventModel.objects.all().order_by('-liked_count')[:5]
     if request.method == "POST":
         post_body = request.POST.get('post')
         
